@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default= "CreateDirectory" basedir=".">
+	<property name="JAVA_HOME" value="C:\Program Files\Java\jdk-11.0.3"/>
+	<property name="base" value="."/>
+	
+	<target name="CreateDirectory">
+		<mkdir dir="Hello-World"/>
+		<ant antfile="../build.xml" dir="Hello-World"  target="CreateFile"/>
+	</target>
+	
+	<target name="CreateFile">
+		<touch file="Readme.txt"/>
+                <echo message="Read me first" file="Readme.txt"/>
+		<ant antfile="../build.xml" dir="${basedir}" target="EchoJavaHome" useNativeBasedir="true"/>
+	</target>
+	
+	<target name="EchoJavaHome">
+	     <echo message="${JAVA_HOME}"/>
+	     <antcall target="SecondDirectory"/>  	
+	</target>
+        
+	<target name="SecondDirectory">
+		<mkdir dir="Destination"/>
+		<antcall target="CopyFile"/>
+	</target>
+        
+	<target name="CopyFile">
+		<copy todir="C:\Users\827422\Downloads\Destination">
+			<fileset dir="C:\Users\827422\Downloads\Hello-World"/>
+		</copy>
+		<ant antfile="../build.xml" dir="Hello-World" target="Delete"/>
+	</target>
+	<target name="Delete">
+		<delete file="C:\Users\827422\Downloads\Hello-World\Readme.txt"/>
+	</target>
+</project>
